@@ -87,7 +87,24 @@ Since the deboarding runs on a schedule (28th of each month), you can test manua
 
 ## Important Notes
 
-⚠️ **Copilot Business Requirement**: Your MartinTesterAtWork organization needs to have GitHub Copilot Business enabled to test seat assignment. Without it, the API calls will fail.
+### Enabling GitHub Copilot Business
+
+⚠️ **Copilot Business is required** to test seat assignment. Follow these steps to enable it:
+
+1. **Go to Copilot settings**: https://github.com/organizations/MartinTesterAtWork/settings/copilot
+2. **Enable Copilot Business**:
+   - You'll need to set up a payment method (requires organization owner permissions)
+   - GitHub Copilot Business costs $19/user/month (or $39/user/month for Copilot Enterprise)
+   - You can start with a free trial if available
+3. **Select access policy**:
+   - Choose "Selected members" (recommended for testing)
+   - Or "All members" (will auto-assign to everyone)
+4. **Set content exclusions** (optional):
+   - Configure which repositories should be excluded from Copilot suggestions
+
+> **Alternative for testing without billing**: If you don't want to enable billing, you can still test the workflow logic by checking the logs. The API calls will fail with a clear error message about Copilot not being enabled, but you can verify that authentication, validation, and other steps work correctly.
+
+### Other Requirements
 
 ⚠️ **Authentication**: The workflows require the GitHub App to be properly configured and installed with the correct permissions.
 

@@ -34,6 +34,10 @@ You need to create a GitHub App for authentication:
 2. Configure:
    - **Name**: MartinTesterAtWork Copilot Onboarder
    - **Homepage URL**: https://github.com/MartinTesterAtWork
+   - **Webhook**:
+     - **Active**: Uncheck this box (webhook not needed for this app)
+     - If you must provide a URL: use `https://github.com/MartinTesterAtWork` or any placeholder
+     - **Webhook secret**: Leave empty or use any random string (not used)
    - **Permissions**:
      - Repository: Issues (Read & Write)
      - Organization: Members (Read & Write)

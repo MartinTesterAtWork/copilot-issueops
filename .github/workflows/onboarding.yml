@@ -1,0 +1,24 @@
+name: Onboarding
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+permissions:
+  issues: write
+
+env:
+  ORG: ${{ github.repository_owner }}
+
+jobs:
+  assign:
+    if: contains(github.event.issue.labels.*.name, 'onboarding') && github.event.issue.state == 'open'
+    name: Onboard process
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fulfill
+        uses: MartinTesterAtWork/src-issueops/fulfill/onboardCopilot@main
+        with:
+          application-id: ${{ secrets.ONBOARDER_APP_ID }}
+          application-private-key: ${{ secrets.ONBOARDER_APP_PK }}

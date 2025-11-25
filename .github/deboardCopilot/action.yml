@@ -1,0 +1,55 @@
+name: "Copilot deboarding"
+description: "Run on a cron, to identify users to remove the Copilot license from."
+inputs:
+  application-id:
+    description: Application ID of GitHub App
+    required: false
+  application-private-key:
+    description: Private SSH key of GitHub App
+    required: false
+
+runs:
+  using: composite
+  steps:
+
+  - name: Authenticate
+    id: authenticate
+    uses: MartinTesterAtWork/src-issueops/authenticate@main
+    with:
+      application-id: ${{ inputs.application-id }}
+      application-private-key: ${{ inputs.application-private-key }}
+
+
+  - name: Deboard
+    env:
+      GITHUB_TOKEN: ${{ steps.authenticate.outputs.token }}
+      SCRIPT: ${{ github.action_path }}/deboard.js
+    uses: actions/github-script@v7
+    id: deboard
+    with:
+      github-token: ${{ steps.authenticate.outputs.token }}
+      script: |
+        const deboarder = require(process.env.SCRIPT)
+        await deboarder.deboard(github, core, context)
+
+  - name: Comment on deboarded users
+    shell: bash
+    if: ${{ steps.deboard.outputs.deboarded }}
+    env:
+      GITHUB_TOKEN: ${{ steps.authenticate.outputs.token }}
+    run: |
+      issue_url=$(gh issue create -R ${{github.repository}} -t "Deboarding inactive users" -b "Users ${{steps.deboard.outputs.deboarded}} have been deboarded from Copilot due to an inactivity of more than ${{env.MAX_DAYS_INACTIVE}} days. You can re-join any time by following the onboarding process from scratch.")
+      gh issue close -R ${{github.repository}} $issue_url
+
+  - name: Errors
+    if: failure()
+    env:
+      GITHUB_TOKEN: ${{ steps.authenticate.outputs.token }}
+    shell: bash
+    run: |
+      gh issue create -R ${{github.repository}} -t "Error deboarding users" -b "$(echo -n 'An error occurred while running the deboarder. You can see the run at
+
+      * https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+
+      Maybe the following helps:
+      ${{steps.deboard.outputs.error}}')"

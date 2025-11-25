@@ -1,0 +1,24 @@
+name: Requesting Copilot license
+description: Request your account to be granted a GitHub Copilot Business license automatically.
+labels:
+- administration
+- onboarding
+
+title: Requesting Copilot license
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      In order to request a GitHub Copilot Business license, please first get familiar with the [internal GitHub Copilot documentation](http://nova.telenor.net/docs/dev-tools/github-enterprise-cloud/explanations/copilot).
+      It's highly important to note that if you are working with EKOM-regulated repositories, or highly sensitive information, they should not be opened with an IDE or any tool that leverages Copilot.
+
+- type: checkboxes
+  attributes:
+    label: Conditions agreement
+    description: By checking this box, you confirm that you have read and understood the internal GitHub Copilot documentation linked above, and that you are aware of which codebases should not be put in contact with Copilot.
+    options:
+    - label: I have read and understood the internal GitHub Copilot documentation
+      required: true
+    - label: I confirm I won't use Copilot with any EKOM regulated workloads
+      required: true

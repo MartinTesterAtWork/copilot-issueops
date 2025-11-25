@@ -1,0 +1,26 @@
+name: Exclude content from Copilot
+description: Request repositories or content to be excluded from Copilot.
+labels:
+- administration
+
+title: Exclude content from Copilot
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      # Exclude pattern from GitHub Copilot processing
+      
+      In order to request a prefix or repository to be excluded from processing by Copilot, please provide a text pattern 
+      describing the exclusion. 
+
+      Example: 
+      - `s12345-*` will exclude all repositories for system id `s12345`.
+      - `s12345-repo` will exclude a specific repository named `s12345-repo`.
+
+
+- type: textarea
+  attributes:
+    label: Copilot exclude pattern
+    description: The name of the repositories that should be excluded from Copilot. Wildcards are allowed.
+    placeholder: e.g. my-repo, s12345-*

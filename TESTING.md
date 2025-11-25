@@ -52,11 +52,17 @@ You need to create a GitHub App for authentication:
 3. Grant access to the copilot-issueops repository
 
 ### 3. Configure Secrets
-Add these secrets to the copilot-issueops repository:
+Add these secrets as **repository secrets** (not environment or organization secrets):
+
 1. Go to https://github.com/MartinTesterAtWork/copilot-issueops/settings/secrets/actions
-2. Add:
-   - `ONBOARDER_APP_ID` = Your GitHub App ID
-   - `ONBOARDER_APP_PK` = Contents of the private key .pem file
+2. Click **"New repository secret"**
+3. Add the following secrets:
+   - **Name**: `ONBOARDER_APP_ID`  
+     **Value**: Your GitHub App ID (numeric value from step 1.3)
+   - **Name**: `ONBOARDER_APP_PK`  
+     **Value**: Complete contents of the private key .pem file (including `-----BEGIN RSA PRIVATE KEY-----` and `-----END RSA PRIVATE KEY-----` lines)
+
+> **Note**: These must be repository secrets for the workflows to access them. Organization or environment secrets won't work for this setup.
 
 ## Testing the Onboarding Workflow
 
